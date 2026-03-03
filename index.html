@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spoke & Wrench Pickup Repairs</title>
+  <meta name="description" content="Mobile bike mechanic with pickup and delivery, affordable prices, and easy online scheduling.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;700&family=Staatliches&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="page-background" aria-hidden="true"></div>
+
+  <header class="hero">
+    <p class="kicker">Mobile Bike Mechanic</p>
+    <h1>Spoke & Wrench Pickup Repairs</h1>
+    <p class="hero-copy">
+      I pick up your bike, fix it fast, and bring it back tuned and ready to ride.
+      Most services are priced lower than typical local bike shops.
+    </p>
+    <div class="hero-actions">
+      <a href="#schedule" class="button button-primary">Book a Pickup</a>
+      <a href="#pricing" class="button button-secondary">See Prices</a>
+    </div>
+  </header>
+
+  <main>
+    <section id="pricing" class="panel">
+      <div class="section-title-wrap">
+        <p class="kicker">Affordable Service</p>
+        <h2>Prices That Beat Most Bike Shops</h2>
+      </div>
+      <p class="section-copy">
+        Pickup and dropoff are included in every service within 7 miles.
+      </p>
+
+      <div class="pricing-grid">
+        <article class="price-card">
+          <h3>Express Tune-Up</h3>
+          <p class="price">$49</p>
+          <p class="comparison">Most shops: $75 - $95</p>
+        </article>
+        <article class="price-card">
+          <h3>Drivetrain Deep Clean</h3>
+          <p class="price">$35</p>
+          <p class="comparison">Most shops: $50 - $70</p>
+        </article>
+        <article class="price-card">
+          <h3>Flat Fix + Safety Check</h3>
+          <p class="price">$24</p>
+          <p class="comparison">Most shops: $35 - $50</p>
+        </article>
+        <article class="price-card">
+          <h3>Brake & Shift Dial-In</h3>
+          <p class="price">$39</p>
+          <p class="comparison">Most shops: $60 - $80</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="schedule" class="panel schedule-panel">
+      <div class="section-title-wrap">
+        <p class="kicker">Easy Booking</p>
+        <h2>Schedule Your Pickup Time</h2>
+      </div>
+
+      <form id="booking-form" class="booking-form">
+        <label>
+          Full name
+          <input id="customer-name" name="name" type="text" required>
+        </label>
+
+        <label>
+          Phone number
+          <input id="customer-phone" name="phone" type="tel" required>
+        </label>
+
+        <label>
+          Pickup date
+          <input id="pickup-date" name="date" type="date" required>
+        </label>
+
+        <label>
+          Pickup window
+          <select id="pickup-slot" name="slot" required>
+            <option value="">Choose a date first</option>
+          </select>
+        </label>
+
+        <label>
+          Service package
+          <select id="service-package" name="service" required>
+            <option value="express">Express Tune-Up - $49</option>
+            <option value="drivetrain">Drivetrain Deep Clean - $35</option>
+            <option value="flat">Flat Fix + Safety Check - $24</option>
+            <option value="brakeshift">Brake & Shift Dial-In - $39</option>
+          </select>
+        </label>
+
+        <fieldset class="addons">
+          <legend>Add-ons</legend>
+          <label class="checkbox-row">
+            <input type="checkbox" name="addon" value="sameDay">
+            Same-day turnaround (+$18)
+          </label>
+          <label class="checkbox-row">
+            <input type="checkbox" name="addon" value="wash">
+            Bike wash + frame detail (+$12)
+          </label>
+          <label class="checkbox-row">
+            <input type="checkbox" name="addon" value="partsCheck">
+            Parts check and quote (+$10)
+          </label>
+        </fieldset>
+
+        <label class="full-row">
+          Notes (optional)
+          <textarea id="service-notes" name="notes" rows="3" placeholder="Example: rear brake rub, skipping in gear 5"></textarea>
+        </label>
+
+        <div class="estimate-box" id="estimate-box" aria-live="polite"></div>
+
+        <button type="submit" class="button button-primary">Confirm Pickup</button>
+      </form>
+    </section>
+
+    <section class="panel">
+      <div class="section-title-wrap">
+        <p class="kicker">Upcoming Jobs</p>
+        <h2>Booked Pickups</h2>
+      </div>
+      <div id="bookings-list" class="bookings-list" aria-live="polite"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>Spoke & Wrench Pickup Repairs</p>
+    <p>Serving riders citywide, six days a week.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
