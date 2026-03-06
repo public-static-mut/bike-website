@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Login</title>
+    <link rel="stylesheet" href="/admin-assets/admin.css" />
+  </head>
+  <body class="admin-page">
+    <main class="login-shell">
+      <form id="loginForm" class="login-card">
+        <h1>Management Login</h1>
+        <p>Enter your admin password.</p>
+        <input type="password" id="password" placeholder="Admin password" required />
+        <button type="submit">Log In</button>
+        <p id="loginMsg" class="message"></p>
+      </form>
+    </main>
+
+    <script>
+      const form = document.getElementById('loginForm');
+      const msg = document.getElementById('loginMsg');
+
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        msg.textContent = '';
+
+        const password = document.getElementById('password').value;
+        const response = await fetch('/api/admin/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ password })
+        });
+
+        if (response.ok) {
+          window.location.href = '/admin';
+          return;
+        }
+
+        const data = await response.json();
+        msg.textContent = data.error || 'Login failed';
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bike Pickup & Repair Scheduling</title>
+    <link rel="stylesheet" href="/public/styles.css" />
+  </head>
+  <body>
+    <main class="layout">
+      <section class="panel booking-panel">
+        <h1>Schedule a Bike Pickup</h1>
+        <p class="subtitle">Choose your pickup time, tell us what needs repair, and we will handle the rest.</p>
+
+        <form id="bookingForm" class="booking-form">
+          <label>
+            Full Name*
+            <input type="text" name="customer_name" required />
+          </label>
+
+          <label>
+            Phone Number*
+            <input type="tel" name="phone" placeholder="(555) 555-5555" required />
+          </label>
+
+          <label>
+            Email
+            <input type="email" name="email" />
+          </label>
+
+          <label>
+            Pickup Address*
+            <input type="text" name="pickup_address" required />
+          </label>
+
+          <label>
+            Bike Type
+            <select name="bike_type">
+              <option value="">Select one</option>
+              <option>Road</option>
+              <option>Mountain</option>
+              <option>Hybrid</option>
+              <option>E-Bike</option>
+              <option>BMX</option>
+              <option>Kids Bike</option>
+            </select>
+          </label>
+
+          <label>
+            Preferred Pickup Date*
+            <input type="date" name="preferred_date" required />
+          </label>
+
+          <label>
+            Preferred Pickup Time*
+            <input type="time" name="preferred_time" required />
+          </label>
+
+          <label>
+            Repair Details*
+            <textarea name="repair_needs" rows="4" placeholder="Example: rear brake rubbing, chain skipping on hills" required></textarea>
+          </label>
+
+          <button type="submit">Book Pickup</button>
+          <p id="bookingMessage" class="message"></p>
+        </form>
+      </section>
+
+      <section class="panel pricing-panel">
+        <h2>Repair List (Budget-Friendly)</h2>
+        <p class="subtitle">Modeled after a full-service shop menu, priced a bit lower for value.</p>
+        <div id="pricingList" class="pricing-list"></div>
+        <a href="/admin" class="admin-link">Open Management Dashboard</a>
+      </section>
+    </main>
+
+    <script src="/public/app.js"></script>
+  </body>
+</html>
