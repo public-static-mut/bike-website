@@ -132,6 +132,10 @@ app.use('/public', express.static(path.join(__dirname, 'public')));
 app.use('/admin-assets', express.static(path.join(__dirname, 'admin')));
 
 app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'main.html'));
+});
+
+app.get('/booking', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
