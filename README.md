@@ -25,8 +25,13 @@ npm install
 
 2. Set environment variables:
 ```bash
-export ADMIN_PASSWORD='your-strong-password'
-export COOKIE_SECRET='a-long-random-secret-value'
+export ADMIN_PASSWORD='Fun132230!'
+export COOKIE_SECRET='Fun132230!e'
+export RESEND_API_KEY='re_xxx'
+export BOOKING_EMAIL_TO='you@yourdomain.com'
+export BOOKING_EMAIL_FROM='Bike Business <bookings@yourdomain.com>'
+# Optional: send bookings by email and skip DB booking writes
+# export BOOKING_EMAIL_ONLY='true'
 ```
 
 3. Start server:
@@ -57,3 +62,11 @@ You can change this anytime in the admin dashboard.
 - Change `ADMIN_PASSWORD` and `COOKIE_SECRET` before public deployment.
 - Add HTTPS and reverse proxy (Nginx/Caddy) in production.
 - Add SMS integration (Twilio, etc.) if you want automatic pickup confirmations.
+
+## Email Booking Mode (No DB Server Needed)
+
+- This app already uses SQLite file storage (`data/bike_business.db`) and does **not** require a separate database server.
+- If you only want bookings by email:
+  - Set `RESEND_API_KEY`, `BOOKING_EMAIL_TO`, and `BOOKING_EMAIL_FROM`.
+  - Set `BOOKING_EMAIL_ONLY=true`.
+  - New bookings will be emailed to you and skip booking DB inserts.

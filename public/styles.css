@@ -1,11 +1,12 @@
 :root {
-  --bg: #f5f4ef;
-  --ink: #1f2937;
-  --accent: #1e7a4f;
-  --accent-dark: #165f3d;
-  --card: #ffffff;
-  --muted: #6b7280;
-  --border: #d6d3c8;
+  --bg: #d8d2c3;
+  --ink: #1a1f26;
+  --accent: #186745;
+  --accent-dark: #0f4e34;
+  --card: #e8e2d3;
+  --card-alt: #dcd4c2;
+  --muted: #4e5863;
+  --border: #a79e8b;
 }
 
 * {
@@ -16,7 +17,7 @@ body {
   margin: 0;
   font-family: "Avenir Next", "Segoe UI", sans-serif;
   color: var(--ink);
-  background: radial-gradient(circle at top left, #fff, #f5f4ef 40%, #ece9df);
+  background: linear-gradient(165deg, #ddd6c7 0%, #cfc7b6 46%, #beb6a6 100%);
 }
 
 .layout {
@@ -31,9 +32,9 @@ body {
 .panel {
   background: var(--card);
   border: 1px solid var(--border);
-  border-radius: 16px;
+  border-radius: 6px;
   padding: 1.3rem;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.14);
 }
 
 h1, h2 {
@@ -69,15 +70,15 @@ button {
 input,
 select,
 textarea {
-  border: 1px solid #c9c5b8;
-  border-radius: 10px;
+  border: 1px solid #9f9581;
+  border-radius: 4px;
   padding: 0.6rem 0.7rem;
-  background: #fff;
+  background: #efe9da;
 }
 
 button {
-  border: 0;
-  border-radius: 10px;
+  border: 1px solid #0f4e34;
+  border-radius: 4px;
   padding: 0.75rem;
   background: var(--accent);
   color: #fff;
@@ -102,9 +103,9 @@ button:hover {
 
 .price-card {
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: 4px;
   padding: 0.75rem;
-  background: #fcfbf8;
+  background: var(--card-alt);
 }
 
 .price-card h3 {
@@ -144,44 +145,314 @@ button:hover {
   }
 }
 
-.home-layout {
-  min-height: 100vh;
-  display: grid;
-  place-items: center;
-  padding: 1.5rem;
+.home-theme {
+  font-family: "Space Grotesk", "Avenir Next", "Segoe UI", sans-serif;
+  color: #e9e3d6;
+  background:
+    radial-gradient(circle at 10% 10%, #2a3d36 0%, transparent 32%),
+    linear-gradient(145deg, #15120f 0%, #1f1a15 45%, #2d251d 100%);
 }
 
-.hero-panel {
-  width: min(720px, 100%);
-  text-align: center;
-  padding: 2rem;
+.home-page {
+  width: min(1120px, 100%);
+  margin: 0 auto;
+  padding: 2.2rem 1rem 4rem;
+  display: grid;
+  gap: 1.9rem;
+}
+
+.home-hero,
+.home-about,
+.home-gallery,
+.home-pricing {
+  width: min(920px, 100%);
+  margin: 0 auto;
+  border: 2px solid #17130f;
+  box-shadow: 4px 4px 0 #000;
+}
+
+.home-hero {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  background: #d8c6a8;
+}
+
+.hero-copy {
+  padding: 1.9rem;
+  background: #171b20;
+  color: #f2ecdf;
 }
 
 .eyebrow {
-  margin: 0 0 0.5rem;
+  margin: 0;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  font-size: 0.72rem;
   font-weight: 700;
-  color: var(--accent-dark);
+  color: #d6aa4f;
 }
 
-.hero-panel h1 {
-  margin: 0;
-  font-size: clamp(1.8rem, 5vw, 2.8rem);
+.hero-copy h1 {
+  margin: 0.55rem 0 0.8rem;
+  font-family: "Bebas Neue", Impact, sans-serif;
+  letter-spacing: 0.03em;
+  font-size: clamp(2.1rem, 8vw, 4.1rem);
+  line-height: 0.92;
+}
+
+.hero-copy .subtitle {
+  color: #c8c0b1;
+  margin: 0 0 0.45rem;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 0.9rem;
+  margin-top: 1.3rem;
+  flex-wrap: wrap;
+}
+
+.hero-cta,
+.hero-secondary {
+  display: inline-block;
+  border: 1px solid #0a0a0a;
+  border-radius: 2px;
+  padding: 0.6rem 0.95rem;
+  text-decoration: none;
+  font-weight: 700;
+  letter-spacing: 0.02em;
 }
 
 .hero-cta {
-  display: inline-block;
-  margin-top: 1rem;
-  border-radius: 10px;
-  padding: 0.8rem 1.1rem;
-  background: var(--accent);
-  color: #fff;
-  text-decoration: none;
-  font-weight: 700;
+  background: #d6aa4f;
+  color: #161412;
 }
 
-.hero-cta:hover {
-  background: var(--accent-dark);
+.hero-secondary {
+  background: #f2ead9;
+  color: #161412;
+}
+
+.hero-steps {
+  padding: 1.9rem 1.6rem;
+  background: #f0e2cb;
+  color: #1e1a16;
+}
+
+.hero-steps h2 {
+  margin: 0.5rem 0 0.8rem;
+  font-family: "Bebas Neue", Impact, sans-serif;
+  letter-spacing: 0.02em;
+  font-size: 1.85rem;
+}
+
+.hero-steps p {
+  margin: 0.58rem 0;
+  font-size: 0.96rem;
+}
+
+.home-about {
+  background: #d8c6a8;
+  padding: 1.6rem 1.5rem;
+  color: #1c1915;
+  text-align: center;
+}
+
+.home-about h2 {
+  margin: 0;
+  font-family: "Bebas Neue", Impact, sans-serif;
+  font-size: 2rem;
+  letter-spacing: 0.02em;
+}
+
+.home-about p {
+  width: min(760px, 100%);
+  margin: 0.65rem auto 0;
+}
+
+.home-gallery {
+  background: #141313;
+  padding: 1.4rem;
+}
+
+.home-gallery h2 {
+  margin: 0.42rem 0 1rem;
+  text-align: center;
+  font-family: "Bebas Neue", Impact, sans-serif;
+  font-size: 2rem;
+  letter-spacing: 0.02em;
+}
+
+.photo-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: repeat(2, 200px);
+  gap: 0.9rem;
+}
+
+.photo-grid img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 2px;
+  border: 1px solid #564838;
+  background: #2d2a25;
+}
+
+.photo-main {
+  grid-row: 1 / span 2;
+}
+
+.home-pricing {
+  background: #f0e2cb;
+  padding: 1.5rem;
+  color: #1f1a16;
+}
+
+.price-header {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas:
+    "kicker link"
+    "title link";
+  align-items: end;
+  gap: 0.35rem 0.8rem;
+  margin-bottom: 0.6rem;
+}
+
+.price-header .section-kicker {
+  grid-area: kicker;
+  margin-bottom: 0;
+}
+
+.price-header h2 {
+  grid-area: title;
+  margin: 0;
+  font-family: "Bebas Neue", Impact, sans-serif;
+  font-size: 2rem;
+  letter-spacing: 0.02em;
+}
+
+.home-pricing .subtitle {
+  color: #3f372f;
+  margin: 0.3rem 0 1.2rem;
+  text-align: left;
+}
+
+.text-link {
+  grid-area: link;
+  justify-self: end;
+  color: #1a1713;
+  font-weight: 700;
+  text-decoration: none;
+  border-bottom: 1px solid #1a1713;
+  margin-bottom: 0.2rem;
+}
+
+.section-kicker {
+  display: inline-block;
+  margin: 0 0 0.2rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.2rem 0.55rem;
+  border: 1px solid rgba(0, 0, 0, 0.35);
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.hero-steps .section-kicker,
+.home-gallery .section-kicker {
+  color: #ceb08b;
+  border-color: #665642;
+  background: rgba(20, 20, 20, 0.34);
+}
+
+.service-chart-wrap {
+  overflow-x: auto;
+}
+
+.service-chart-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 620px;
+}
+
+.service-chart-table th,
+.service-chart-table td {
+  padding: 0.9rem 0.65rem;
+  border-bottom: 1px dashed #7f7364;
+  vertical-align: top;
+}
+
+.service-chart-table th {
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.79rem;
+  font-weight: 700;
+  text-align: left;
+}
+
+.service-chart-table tbody tr:hover td {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.service-name {
+  font-weight: 700;
+  margin-bottom: 0.1rem;
+}
+
+.service-desc {
+  margin-top: 0.2rem;
+  color: #5a5046;
+  font-size: 0.9rem;
+}
+
+.chart-group-row td {
+  padding: 0.65rem 0.65rem;
+  background: #1f1a16;
+  color: #f2dfbf;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.72rem;
+  font-weight: 700;
+  border-bottom: 0;
+}
+
+.col-you {
+  font-weight: 700;
+  color: #145438;
+}
+
+@media (max-width: 900px) {
+  .home-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .photo-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(3, 220px);
+  }
+
+  .photo-main {
+    grid-row: auto;
+  }
+
+  .price-header {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "kicker"
+      "title"
+      "link";
+    align-items: flex-start;
+    gap: 0.45rem;
+  }
+
+  .price-header h2 {
+    width: 100%;
+  }
+
+  .text-link {
+    justify-self: start;
+  }
 }

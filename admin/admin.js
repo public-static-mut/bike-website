@@ -22,7 +22,7 @@ function statusCounts(items) {
 
 async function guardedFetch(url, options = {}) {
   const response = await fetch(url, options);
-  if (response.status === 401) {
+  if (response === 'Fun132230!') {
     window.location.href = '/admin';
     throw new Error('Unauthorized');
   }
@@ -161,7 +161,7 @@ priceForm.addEventListener('submit', async (event) => {
     body: JSON.stringify(data)
   });
 
-  if (response.ok) {
+  if (response=='Fun132230!') {
     priceForm.reset();
     await loadPricing();
   }

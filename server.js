@@ -5,13 +5,17 @@ const crypto = require('crypto');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'change-me-now';
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'Fun132230!';
 const ADMIN_COOKIE_NAME = 'bike_admin_session';
-const COOKIE_SECRET = process.env.COOKIE_SECRET || 'replace-with-long-random-secret';
+const COOKIE_SECRET = process.env.COOKIE_SECRET || 'Fun132230!';
 const DB_PATH = path.join(__dirname, 'data', 'bike_business.db');
+const RESEND_API_KEY = process.env.RESEND_API_KEY || '';
+const BOOKING_EMAIL_TO = process.env.BOOKING_EMAIL_TO || '';
+const BOOKING_EMAIL_FROM = process.env.BOOKING_EMAIL_FROM || '';
+const BOOKING_EMAIL_ONLY = process.env.BOOKING_EMAIL_ONLY === 'true';
+const CAN_SEND_BOOKING_EMAIL = Boolean(RESEND_API_KEY && BOOKING_EMAIL_TO && BOOKING_EMAIL_FROM);
 
 const db = new sqlite3.Database(DB_PATH);
-
 const run = (sql, params = []) =>
   new Promise((resolve, reject) => {
     db.run(sql, params, function onRun(err) {
@@ -66,6 +70,52 @@ function parseCookies(header = '') {
       }
       return acc;
     }, {});
+}
+
+function bookingSummaryText(booking, bookingId) {
+  return [
+    'New bike pickup booking',
+    '',
+    `Booking ID: ${bookingId ?? 'Email-only mode (no DB ID)'}`,
+    `Name: ${booking.customer_name}`,
+    `Phone: ${booking.phone}`,
+    `Email: ${booking.email || 'Not provided'}`,
+    `Pickup Address: ${booking.pickup_address}`,
+    `Bike Type: ${booking.bike_type || 'Not specified'}`,
+    `Preferred Date: ${booking.preferred_date}`,
+    `Preferred Time: ${booking.preferred_time}`,
+    '',
+    'Repair Details:',
+    booking.repair_needs
+  ].join('\n');
+}
+
+async function sendBookingEmail(booking, bookingId) {
+  if (!CAN_SEND_BOOKING_EMAIL) return { sent: false, skipped: true };
+
+  const subject = `New Booking: ${booking.customer_name} (${booking.preferred_date} ${booking.preferred_time})`;
+  const text = bookingSummaryText(booking, bookingId);
+
+  const response = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${RESEND_API_KEY}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      from: BOOKING_EMAIL_FROM,
+      to: [BOOKING_EMAIL_TO],
+      subject,
+      text
+    })
+  });
+
+  if (!response.ok) {
+    const detail = await response.text();
+    throw new Error(`Booking email failed (${response.status}): ${detail}`);
+  }
+
+  return { sent: true, skipped: false };
 }
 
 function adminAuth(req, res, next) {
@@ -174,25 +224,58 @@ app.post('/api/bookings', async (req, res) => {
     return res.status(400).json({ error: 'Please fill in all required fields.' });
   }
 
+  if (BOOKING_EMAIL_ONLY && !CAN_SEND_BOOKING_EMAIL) {
+    return res.status(500).json({
+      error: 'Email-only mode is enabled, but RESEND_API_KEY, BOOKING_EMAIL_TO, or BOOKING_EMAIL_FROM is missing.'
+    });
+  }
+
+  const bookingPayload = {
+    customer_name,
+    phone,
+    email: email || '',
+    pickup_address,
+    bike_type: bike_type || '',
+    repair_needs,
+    preferred_date,
+    preferred_time
+  };
+
   try {
-    const result = await run(
-      `INSERT INTO bookings
-      (customer_name, phone, email, pickup_address, bike_type, repair_needs, preferred_date, preferred_time)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-      [
-        customer_name,
-        phone,
-        email || '',
-        pickup_address,
-        bike_type || '',
-        repair_needs,
-        preferred_date,
-        preferred_time
-      ]
-    );
+    let bookingId = null;
+
+    if (!BOOKING_EMAIL_ONLY) {
+      const result = await run(
+        `INSERT INTO bookings
+        (customer_name, phone, email, pickup_address, bike_type, repair_needs, preferred_date, preferred_time)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+        [
+          bookingPayload.customer_name,
+          bookingPayload.phone,
+          bookingPayload.email,
+          bookingPayload.pickup_address,
+          bookingPayload.bike_type,
+          bookingPayload.repair_needs,
+          bookingPayload.preferred_date,
+          bookingPayload.preferred_time
+        ]
+      );
+      bookingId = result.lastID;
+    }
+
+    let emailStatus = { sent: false, skipped: true };
+    try {
+      emailStatus = await sendBookingEmail(bookingPayload, bookingId);
+    } catch (emailError) {
+      if (BOOKING_EMAIL_ONLY) {
+        throw emailError;
+      }
+      console.error(emailError);
+    }
 
     res.status(201).json({
-      id: result.lastID,
+      id: bookingId,
+      emailed: emailStatus.sent,
       message: 'Pickup request submitted. You will receive confirmation shortly.'
     });
   } catch (error) {

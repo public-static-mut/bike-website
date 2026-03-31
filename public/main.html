@@ -3,20 +3,61 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Bike Business Home</title>
+    <title>Bike Business | Mobile Bike Repair</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Bebas+Neue&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="/public/styles.css" />
   </head>
-  <body>
-    <main class="home-layout">
-      <section class="panel hero-panel">
-        <p class="eyebrow">Bike Business</p>
-        <h1>Fast, Friendly Bike Pickup and Repair</h1>
-        <p class="subtitle">
-          We pick up your bike, fix what is needed, and return it ready to ride.
-          Start your request in under a minute.
+  <body class="home-theme">
+    <main class="home-page">
+      <section class="home-hero">
+        <div class="hero-copy">
+          <p class="eyebrow">MOBILE BIKE WORKSHOP</p>
+          <h1>Pickup. Repair. Return.</h1>
+          <p class="subtitle">
+            Door-to-door bike service for riders who want fast turnaround without
+            hauling their bike across town.
+          </p>
+          <div class="hero-actions">
+            <a class="hero-cta" href="/booking">Book a Pickup</a>
+          </div>
+        </div>
+        <aside class="hero-steps">
+          <p class="section-kicker">Service Flow</p>
+          <h2>How It Works</h2>
+          <p><strong>1.</strong> Send your request and pickup details.</p>
+          <p><strong>2.</strong> I pick up your bike and complete service.</p>
+          <p><strong>3.</strong> Your bike comes back tuned and ride-ready.</p>
+        </aside>
+      </section>
+
+      <section class="home-about">
+        <p class="section-kicker">About The Service</p>
+        <h2>What I Do</h2>
+        <p>
+          I run a neighborhood-focused bike repair service with pickup and
+          delivery. Most work includes brake and shifting adjustments, flat repair,
+          drivetrain cleanup, tune-ups, and safety checks before return.
         </p>
-        <a class="hero-cta" href="/booking">Go to Booking Page</a>
+      </section>
+
+      <section class="home-pricing">
+        <div class="price-header">
+          <p class="section-kicker">Service Menu</p>
+          <h2>Service Chart</h2>
+          <a href="/booking" class="text-link">Book Now</a>
+        </div>
+        <p class="subtitle">
+          Full service list with your current pricing.
+        </p>
+        <div id="mainPricingList" class="service-chart-wrap"></div>
       </section>
     </main>
+
+    <script src="/public/main.js"></script>
   </body>
 </html>
