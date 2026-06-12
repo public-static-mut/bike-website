@@ -8,7 +8,7 @@ const serviceCatalog = [
   {
     group: 'Tune-Ups',
     services: [
-      { name: 'Single-Speed Tune-Up', helenPriceText: '$65' },
+      { name: 'Single-Speed Tune-Up', helenPriceText: '$80' },
       { name: 'Standard Tune-Up', helenPriceText: '$100' },
       { name: 'The Ultra Tune-Up', helenPriceText: '$160' },
       { name: 'Complete Overhaul', helenPriceText: '$275' }

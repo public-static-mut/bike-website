@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const fs = require('fs');
 const sqlite3 = require('sqlite3').verbose();
 const crypto = require('crypto');
 
@@ -8,7 +9,10 @@ const PORT = process.env.PORT || 3000;
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'Fun132230!';
 const ADMIN_COOKIE_NAME = 'bike_admin_session';
 const COOKIE_SECRET = process.env.COOKIE_SECRET || 'Fun132230!';
-const DB_PATH = path.join(__dirname, 'data', 'bike_business.db');
+const IS_VERCEL = Boolean(process.env.VERCEL);
+const DB_DIR = process.env.DB_DIR || (IS_VERCEL ? '/tmp' : path.join(__dirname, 'data'));
+const DB_PATH = path.join(DB_DIR, 'bike_business.db');
+fs.mkdirSync(DB_DIR, { recursive: true });
 const RESEND_API_KEY = process.env.RESEND_API_KEY || '';
 const BOOKING_EMAIL_TO = process.env.BOOKING_EMAIL_TO || '';
 const BOOKING_EMAIL_FROM = process.env.BOOKING_EMAIL_FROM || '';
@@ -159,12 +163,10 @@ async function initDb() {
   const countRow = await get('SELECT COUNT(*) as count FROM pricing');
   if (!countRow || countRow.count === 0) {
     const defaults = [
-      ['Basic Tune-Up', 'Brake + gear adjustment, safety check', 64],
-      ['Full Tune-Up', 'Complete drivetrain clean + adjustments', 109],
-      ['Flat Fix', 'Tube replacement and tire inspection', 22],
-      ['Brake Service', 'Pad replacement and cable tuning', 34],
-      ['Drivetrain Deep Clean', 'Degrease + chain service', 42],
-      ['Wheel True', 'Single wheel spoke/tension correction', 27]
+      ['Basic Tune-Up', 'Brake + gear adjustment, safety check', 50],
+      ['Flat Fix', 'Tube replacement and tire inspection', 20],
+      ['Brake Service', 'Pad replacement and cable tuning', 25],
+      ['Wheel True', 'Single wheel spoke/tension correction', 40]
     ];
 
     for (const item of defaults) {
@@ -174,6 +176,10 @@ async function initDb() {
       );
     }
   }
+
+  await run(
+    "UPDATE pricing SET price = 50 WHERE service_name = 'Basic Tune-Up'"
+  );
 }
 
 app.use(express.json());
@@ -279,6 +285,7 @@ app.post('/api/bookings', async (req, res) => {
       message: 'Pickup request submitted. You will receive confirmation shortly.'
     });
   } catch (error) {
+    console.error('Booking submission failed:', error);
     res.status(500).json({ error: 'Could not submit booking.' });
   }
 });
