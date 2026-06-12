@@ -8,7 +8,11 @@ const serviceCatalog = [
   {
     group: 'Tune-Ups',
     services: [
-      { name: 'Single-Speed Tune-Up', helenPriceText: '$80' },
+      {
+        name: 'Single-Speed Tune-Up',
+        pricingName: 'Basic Tune-Up',
+        helenPriceText: '$80'
+      },
       { name: 'Standard Tune-Up', helenPriceText: '$100' },
       { name: 'The Ultra Tune-Up', helenPriceText: '$160' },
       { name: 'Complete Overhaul', helenPriceText: '$275' }
@@ -206,7 +210,9 @@ async function loadMainPricing() {
       .map((group) => {
         const serviceRows = group.services
           .map((service) => {
-            const live = liveByName.get(normalizeServiceName(service.name));
+            const live = liveByName.get(
+              normalizeServiceName(service.pricingName || service.name)
+            );
             const helenBase = parseHelenBasePrice(service.helenPriceText);
             const inferredPrice = deriveBudgetPrice(helenBase);
             const myPrice = live
